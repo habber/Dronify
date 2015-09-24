@@ -1,0 +1,45 @@
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, minimal-ui">
+    <meta charset="UTF-8">
+    <title>DRONIFY</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+</head>
+
+<body>
+
+    <img src="https://developers.soundcloud.com/assets/powered_by_large_white-de881ecad8561c2131e7676fa9e92738.png" class="float"></img>
+    <div class="top-container">
+      <h1>DRONIFY</h1>
+      <h2>Dronify any song.</h2>
+      <audio id="theSong" controls />
+    </div>
+<!-- Set Playback Rate -->
+<!-- <div id="playback">
+    <h2>Set playback rate</h2>
+   <input class="playback-rate-control" type="range" min="0.25" max="3" step="0.05" value="1">
+   <span class="playback-rate-value">1.0</span>
+</div> -->
+
+    <div id="controls">
+      <p>
+        <input id="rateSlider" title="Frequency" type="range" min="-1" max="1" value="-.5" step=".2" />
+      </p>
+        <select id="filtersDropdown">
+        </select>
+      </p>
+      <!-- <canvas id="canvas" width="400" height ="200"></canvas> -->
+      <canvas id="canvas" width="0" height ="0"></canvas>
+
+      <p>
+        <input id="frequencySlider" title="Frequency" type="range" min="0" max="2000" value="1000" />
+        <input id="qSlider" title="Q" type="range" min="1" max="100" value="10" />
+        <input id="gainSlider" title="Gain" disabled type="range" min="1" max="100" value="20" />
+      </p>
+    </div>
+
+</body>
+<script type="text/javascript" src="javascript/script.js"></script>
+
+</html>
