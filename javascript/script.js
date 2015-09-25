@@ -1,6 +1,8 @@
 /*
-  Read my blog post about Web Audio API:
+  Thanks to @DonKarlssonSan
   http://codepen.io/DonKarlssonSan/blog/fun-with-web-audio-api
+
+  Thanks to @chrisdavidmills who helped me out and wrote MDN's Web Audio API docs
 
   Browser support for Web Audio API:
   http://caniuse.com/#feat=audio-api
@@ -12,6 +14,7 @@
 // playbackControl.setAttribute('disabled', 'disabled');
 
 
+var audio;
 
 (function() {
   var AudioContext = window.AudioContext ||
@@ -19,15 +22,9 @@
   var audioContext;
   var biquadFilter;
 
-// Habber's new rate slider
-  var rateSlider = document.getElementById("rateSlider");
-// end Habber's additions
-
   var frequencySlider = document.getElementById("frequencySlider");
   var qSlider = document.getElementById("qSlider");
   var gainSlider = document.getElementById("gainSlider");
-
-  var audio;
 
 
   // All Web Audio API filters
@@ -61,7 +58,7 @@
     }
   };
 
-// TURNED OFF VISUALIZATIONS
+// TURNED OFF VISUALIZATIONS IN HTML
   var canvas = document.getElementById("canvas");
   var canvasContext = canvas.getContext("2d");
 
@@ -78,13 +75,12 @@
   var magResponseOutput = new Float32Array(frequencyBars); // magnitude
   var phaseResponseOutput = new Float32Array(frequencyBars);
 
-  audioContext = new AudioContext();
-
+  var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   window.addEventListener("load", function(e) {
     audio = document.getElementById("theSong");
     audio.crossOrigin = "anonymous";
 
-    var source = audioContext.createMediaElementSource(audio);
+    var source = audioContext.createMediaElementSource(audio); // source variable
 
     biquadFilter = audioContext.createBiquadFilter();
     biquadFilter.type = "lowpass";
@@ -96,24 +92,58 @@
     biquadFilter.connect(audioContext.destination);
 
     updateFrequencyResponse();
+
+
+// Habber's new rate slider - that works!
+// Why does sound stop if I go below .5 min? I thought .25 was min.
+// Why doesn't pitch change while playback rate changes? (I expected voice to be lower)
+// Any way to avoid clipping/choppiness?
+
+        var rateSlider = document.getElementById("rateSlider");
+        // playbackRate.connect(audioContext.destination);
+        // source2.connect(audioContext.destination);
+
+        rateSlider.addEventListener("change", function () {
+        //audio.playbackRate = .5;
+        audio.playbackRate = rateSlider.value;
+// getting "source is not defined" error
+        // rateSlider.innerHTML = rateSlider.value; // unsure if this is needed ???
+        // source.playbackRate.value = this.value;
   }, false);
 
-  // Habber's new rate slider
-  rateSlider.addEventListener("change", function () {
-    //playbackRate.value = .5; // habber's new rate slider
-    source.playbackRate.value = rateSlider.value;
-    // source.playbackRate.value = this.value;
+
+// Habber grabbing artist name
+// document.getElementById("artistName").innerHTML = trackInfo.user.username;
+
+// Habber's new filter button that sort of works - once filter works, add if/than state to toggle off/on
+// tried a few things like this box.classList.toggle("filterone");
+    var filterone = document.getElementById("filterone");
+    filterone.addEventListener("click", filterToggleOne);
+
+    function filterToggleOne(event) {
+      // alert("yo");
+      biquadFilter.type = "lowshelf";
+      biquadFilter.frequency.value = 1000;
+      biquadFilter.gain.value = 25;
+      biquadFilter.q.value = 100;
+      // biquadFilter.Q.value = 50; // 1 - 100
+      // updateFrequencyResponse();
+      // biquadFilter.gain.value = 10; // 1-25
+      // updateFrequencyResponse();
+      // biquarFilter.frequency.value = xx // up to 3000
+
+      event.preventDefault();
+    }
+
 
   });
-
-  // source.playbackRate.value = playbackControl.value;
 
   // end Habber's additions
 
 
-  ////////////////////////////
-  // Visualizations //
-  ////////////////////////////
+  //////////////////////////////////////
+  // Visualizations   - will omit      //
+  //////////////////////////////////////
 
   function drawFrequencyResponse(mag, phase) {
     canvasContext.clearRect(0, 0, canvas.width, canvas.height);

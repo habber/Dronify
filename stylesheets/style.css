@@ -1,13 +1,24 @@
 body {
-	background-color: #141722;
+	background-color: #03675e;
 	text-align: center;
 	margin: 0 auto;
 	position: relative;
 }
+
+button {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-bottom-width: 2px;
+	border-radius: 5px; font-size: inherit;
+	padding: .5em 1em;
+	cursor: pointer;
+	background-color: rgb(244, 234, 9)
+
+}
+
 .float {
   position: absolute;
-  left: 0;
-  top: 0;
+  right: 10px;
+  bottom: 0;
 }
 
 .top-container {
@@ -20,7 +31,7 @@ body {
 	text-align: center;
 	margin-bottom: 40px;
 	border-bottom: 2px solid rgba(0, 0, 0, 1);
-	background-color: rgba(128, 128, 128, 0.16);
+	background-color: rgba(0, 0, 0, 0.16);
 }
 
 .top-container h1 {
