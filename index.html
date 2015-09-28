@@ -4,51 +4,63 @@
     <meta charset="UTF-8">
     <title>DRONIFY</title>
     <link rel="stylesheet" href="stylesheets/style.css">
+    <link href='https://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
 
 </head>
 
 <body>
     <div class="top-container">
       <h1>DRONIFY</h1>
-      <h2>Make this song droney.</h2>
+      <h2>Make this song as droney as you like.</h2>
+
+      <!-- by track URL -->
+        <div class="searchfield">
+          <input id="trackUrlSearch" type="url" placeholder="Enter your own SoundCloud URL" />
+          <button id="findButton" class="btn btn-default">Find</button>
+        </div>
+
+      <!-- end artist info -->
+
+      <!-- get artist info -->
+      <div>
+        <label>Artist:
+          <a id="artistUrl">
+            <span id="artistName"></span><br/>
+            <div class = "albumCover">
+              <img id="artistAvatar" />
+            </div>
+          </a>
+        </label>
+      </div>
+      <div>
+        <label>Track:
+          <a id="trackUrl">
+            <span id="trackName"></span><br/>
+            <img id="trackArt" />
+          </a>
+        </label>
+      </div>
+
       <audio id="theSong" controls />
     </div>
-    <div>
-    <label>Artist [ will add later ]:
-      <a id="artistUrl">
-        <span id="artistName"></span><br/>
-        <!-- <img id="artistAvatar" /> -->
-      </a>
-    </label>
-  </div>
-<!-- Set Playback Rate -->
-<!-- <div id="playback">
-    <h2>Set playback rate</h2>
-   <input class="playback-rate-control" type="range" min="0.25" max="3" step="0.05" value="1">
-   <span class="playback-rate-value">1.0</span>
-</div> -->
 
     <div id="controls">
-      <!-- Removed form tag since it reloads page -->
-        <button id="filterone" type="submit" value"ON">FILTER</button>
+     <div class="bottom-container">
+        <p><h3>
+        Maximum Drone! (Slowest) <input id="rateSlider" title="Rate" type="range" min=".50" max="1" value="1" step=".05" /> Normal
+        </h3></p>
+        <p>
+          <button id="filterone" type="submit" value"" class="inactive">DREAMY DRONE</button>
 
-      <p>
-      Maximum Drone! (Slowest) <input id="rateSlider" title="Rate" type="range" min=".50" max="1" value="1" step=".05" /> Normal
-      </p>
-        <select id="filtersDropdown">
-        </select>
-      </p>
-      <!-- <canvas id="canvas" width="400" height ="200"></canvas> -->
-      <canvas id="canvas" width="0" height ="0"></canvas>
+          <button id="filtertwo" type="submit" value"" class="inactive">HEAVY DRONE</button>
 
-      <p>
-        <input id="frequencySlider" title="Frequency" type="range" min="0" max="2000" value="1000" />
-        <input id="qSlider" title="Q" type="range" min="1" max="100" value="10" />
-        <input id="gainSlider" title="Gain" disabled type="range" min="1" max="100" value="20" />
-      </p>
-      <p>
-        <img src="https://developers.soundcloud.com/assets/powered_by_large_white-de881ecad8561c2131e7676fa9e92738.png" class="float"></img>
-</p>
+          <button id="filterthree" type="submit" value"" class="inactive">SMOOTH DRONE</button>
+        </p>
+          <canvas id="canvas" width="0" height ="0"></canvas>
+        <p>
+          <img src="https://developers.soundcloud.com/assets/powered_by_large_white-de881ecad8561c2131e7676fa9e92738.png" class="float"></img>
+        </p>
+      </div>
     </div>
 
 

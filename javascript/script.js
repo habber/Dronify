@@ -29,8 +29,7 @@ var audio;
 
   // All Web Audio API filters
   // https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode/type
-  // q and gain controls if the corresponding slider
-  // should be enabled
+  // q and gain controls of the corresponding slider
   var filters = { "lowpass": {
       q: true,
       gain: false
@@ -81,7 +80,7 @@ var audio;
     audio.crossOrigin = "anonymous";
 
     var source = audioContext.createMediaElementSource(audio); // source variable
-
+    // var source = audioContext.createMediaElementSource(audio); // source variable
     biquadFilter = audioContext.createBiquadFilter();
     biquadFilter.type = "lowpass";
     biquadFilter.frequency.value = 1000;
@@ -91,14 +90,10 @@ var audio;
     source.connect(biquadFilter);
     biquadFilter.connect(audioContext.destination);
 
-    updateFrequencyResponse();
+    // updateFrequencyResponse();
 
 
 // Habber's new rate slider - that works!
-// Why does sound stop if I go below .5 min? I thought .25 was min.
-// Why doesn't pitch change while playback rate changes? (I expected voice to be lower)
-// Any way to avoid clipping/choppiness?
-
         var rateSlider = document.getElementById("rateSlider");
         // playbackRate.connect(audioContext.destination);
         // source2.connect(audioContext.destination);
@@ -106,8 +101,6 @@ var audio;
         rateSlider.addEventListener("change", function () {
         //audio.playbackRate = .5;
         audio.playbackRate = rateSlider.value;
-// getting "source is not defined" error
-        // rateSlider.innerHTML = rateSlider.value; // unsure if this is needed ???
         // source.playbackRate.value = this.value;
   }, false);
 
@@ -116,26 +109,105 @@ var audio;
 // document.getElementById("artistName").innerHTML = trackInfo.user.username;
 
 // Habber's new filter button that sort of works - once filter works, add if/than state to toggle off/on
-// tried a few things like this box.classList.toggle("filterone");
+// tried a few things like this .classList.toggle("filterone");
+
+// FILTER ONE DREAMY DRONE
+// Highpass uses Frequency and Q
+// biquadFilter.gain.value 1-25
+// biquarFilter.frequency.value = xx // up to 3000
+// biquadFilter.Q.value = xx; // 1 - 100
+
     var filterone = document.getElementById("filterone");
     filterone.addEventListener("click", filterToggleOne);
 
     function filterToggleOne(event) {
-      // alert("yo");
-      biquadFilter.type = "lowshelf";
-      biquadFilter.frequency.value = 1000;
-      biquadFilter.gain.value = 25;
-      biquadFilter.q.value = 100;
-      // biquadFilter.Q.value = 50; // 1 - 100
-      // updateFrequencyResponse();
-      // biquadFilter.gain.value = 10; // 1-25
-      // updateFrequencyResponse();
-      // biquarFilter.frequency.value = xx // up to 3000
+      // console.log(this.id);
 
+      biquadFilter.type = "highpass";
+
+      if(this.className == "active") {
+      // Unactivate the filter
+      biquadFilter.frequency.value = 1000;
+      biquadFilter.Q.value = 0;
+      // biquadFilter.gain.value = 0;
+      this.className = "inactive";
+      filterone.style.backgroundColor = 'rgb(25, 236, 242)';
+    } else {
+      // Activate filter
+      biquadFilter.frequency.value = 1000;
+      biquadFilter.Q.value = 20;
+      // biquadFilter.gain.value = 10;
+      this.className = "active";
+      filterone.style.backgroundColor = 'rgb(255, 255, 255)';
+      // alert(this.className);
+    }
       event.preventDefault();
     }
 
 
+  // FILTER TWO HEAVY DRONE
+  // Lowshelf uses Frequency and Gain
+  // biquadFilter.gain.value 1-25
+  // biquarFilter.frequency.value = xx // up to 3000
+
+    var filtertwo = document.getElementById("filtertwo");
+    filtertwo.addEventListener("click", filterToggleTwo);
+
+    function filterToggleTwo(event) {
+      biquadFilter.type = "lowshelf";
+
+      if(this.className == "active") {
+      // Unactivate the filter
+      biquadFilter.frequency.value = 1000;
+      biquadFilter.gain.value = 0;
+      this.className = "inactive";
+      filtertwo.style.backgroundColor = 'rgb(25, 236, 242)';
+
+    } else {
+      // activate filter
+      biquadFilter.frequency.value = 1000;
+      biquadFilter.gain.value = 10;
+      this.className = "active";
+      // document.getElementById(id).style.background = 'rgb(25, 236, 242)';
+      filtertwo.style.backgroundColor = 'rgb(255, 255, 255)';
+    }
+      event.preventDefault();
+    }
+
+
+    // FILTER THREE BUTTERY DRONE
+    // Lowpass uses Frequency and Q value
+    // biquarFilter.frequency.value = xx // up to 3000
+    // biquadFilter.Q.value = xx; // 1 - 100
+      var filterthree = document.getElementById("filterthree");
+      filterthree.addEventListener("click", filterToggleThree);
+      //filterthree.onclick = filterToggleThree;
+
+      function filterToggleThree(event) {
+        // console.log(this.id);
+        biquadFilter.type = "lowpass";
+
+        if(this.className == "active") {
+          // Unactivate the filter
+          biquadFilter.frequency.value = 1000;
+          biquadFilter.Q.value = 0;
+          this.className = "inactive";
+          filterthree.style.backgroundColor = 'rgb(25, 236, 242)';
+
+          // alert(this.className);
+        } else {
+          //unactivate the filter
+          biquadFilter.frequency.value = 1000;
+          biquadFilter.Q.value = 20;
+          this.className = "active";
+          filterthree.style.backgroundColor = 'rgb(255, 255, 255)';
+          // alert(this.className);
+
+        }
+        event.preventDefault();
+
+
+      }
   });
 
   // end Habber's additions
@@ -144,78 +216,82 @@ var audio;
   //////////////////////////////////////
   // Visualizations   - will omit      //
   //////////////////////////////////////
+  //
+  // function drawFrequencyResponse(mag, phase) {
+  //   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+  //   var barWidth = 400 / frequencyBars;
+  //
+  //   // Magnitude
+  //   canvasContext.strokeStyle = "white";
+  //   canvasContext.beginPath();
+  //   for(var frequencyStep = 0; frequencyStep < frequencyBars; ++frequencyStep) {
+  //     canvasContext.lineTo(
+  //       frequencyStep * barWidth,
+  //       canvas.height - mag[frequencyStep]*90);
+  //   }
+  //   canvasContext.stroke();
+  //
+  //   // Phase
+  //   canvasContext.strokeStyle = "red";
+  //   canvasContext.beginPath();
+  //   for(var frequencyStep = 0; frequencyStep < frequencyBars; ++frequencyStep) {
+  //     canvasContext.lineTo(
+  //       frequencyStep * barWidth,
+  //       canvas.height - (phase[frequencyStep]*90 + 300)/Math.PI);
+  //   }
+  //   canvasContext.stroke();
+  // }
+  //
+  // function updateFrequencyResponse() {
+  //   biquadFilter.getFrequencyResponse(
+  //     myFrequencyArray,
+  //     magResponseOutput,
+  //     phaseResponseOutput);
+  //   drawFrequencyResponse(magResponseOutput, phaseResponseOutput);
+  // }
+  //
+  // frequencySlider.addEventListener("change", function () {
+  //   biquadFilter.frequency.value = this.value;
+  // });
+  //
+  // frequencySlider.addEventListener("mousemove", function () {
+  //   biquadFilter.frequency.value = this.value;
+  //   updateFrequencyResponse();
+  // });
+  //
+  // qSlider.addEventListener("mousemove", function () {
+  //   biquadFilter.Q.value = this.value;
+  //   updateFrequencyResponse();
+  // });
+  //
+  // gainSlider.addEventListener("mousemove", function () {
+  //   biquadFilter.gain.value = this.value;
+  //   updateFrequencyResponse();
+  // });
+  //
+  // var filtersDropdown = document.getElementById("filtersDropdown");
+  //
+  // for(var item in filters) {
+  //   var option = document.createElement("option");
+  //   option.innerHTML = item;
+  //   // This will cause a re-flow of the page but we don't care
+  //   filtersDropdown.appendChild(option);
+  // };
+  //
+  // function filterClicked (event) {
+  //   event = event || window.event;
+  //   var target = event.target || event.srcElement;
+  //   var filterName = target.value;
+  //   biquadFilter.type = filterName;
+  //   updateFrequencyResponse();
+  //   qSlider.disabled = !filters[filterName].q;
+  //   gainSlider.disabled = !filters[filterName].gain;
+  // };
+  // filtersDropdown.addEventListener("change", filterClicked, false);
 
-  function drawFrequencyResponse(mag, phase) {
-    canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-    var barWidth = 400 / frequencyBars;
 
-    // Magnitude
-    canvasContext.strokeStyle = "white";
-    canvasContext.beginPath();
-    for(var frequencyStep = 0; frequencyStep < frequencyBars; ++frequencyStep) {
-      canvasContext.lineTo(
-        frequencyStep * barWidth,
-        canvas.height - mag[frequencyStep]*90);
-    }
-    canvasContext.stroke();
 
-    // Phase
-    canvasContext.strokeStyle = "red";
-    canvasContext.beginPath();
-    for(var frequencyStep = 0; frequencyStep < frequencyBars; ++frequencyStep) {
-      canvasContext.lineTo(
-        frequencyStep * barWidth,
-        canvas.height - (phase[frequencyStep]*90 + 300)/Math.PI);
-    }
-    canvasContext.stroke();
-  }
 
-  function updateFrequencyResponse() {
-    biquadFilter.getFrequencyResponse(
-      myFrequencyArray,
-      magResponseOutput,
-      phaseResponseOutput);
-    drawFrequencyResponse(magResponseOutput, phaseResponseOutput);
-  }
-
-  frequencySlider.addEventListener("change", function () {
-    biquadFilter.frequency.value = this.value;
-  });
-
-  frequencySlider.addEventListener("mousemove", function () {
-    biquadFilter.frequency.value = this.value;
-    updateFrequencyResponse();
-  });
-
-  qSlider.addEventListener("mousemove", function () {
-    biquadFilter.Q.value = this.value;
-    updateFrequencyResponse();
-  });
-
-  gainSlider.addEventListener("mousemove", function () {
-    biquadFilter.gain.value = this.value;
-    updateFrequencyResponse();
-  });
-
-  var filtersDropdown = document.getElementById("filtersDropdown");
-
-  for(var item in filters) {
-    var option = document.createElement("option");
-    option.innerHTML = item;
-    // This will cause a re-flow of the page but we don't care
-    filtersDropdown.appendChild(option);
-  };
-
-  function filterClicked (event) {
-    event = event || window.event;
-    var target = event.target || event.srcElement;
-    var filterName = target.value;
-    biquadFilter.type = filterName;
-    updateFrequencyResponse();
-    qSlider.disabled = !filters[filterName].q;
-    gainSlider.disabled = !filters[filterName].gain;
-  };
-  filtersDropdown.addEventListener("change", filterClicked, false);
 
   ////////////////////////////
   // Soundcloud stuff below //
@@ -238,17 +314,41 @@ var audio;
 
 // habber's song w/ permission from myself because I wrote it :)
   var trackPermalinkUrl =
-      "https://soundcloud.com/hollyhabstritt/08-thought-leader";
+      // "https://soundcloud.com/hollyhabstritt/05-magicians-hat";
+      // "https://soundcloud.com/hollyhabstritt/08-thought-leader";
+      // song from the ex amsterdam
+      "https://soundcloud.com/the-ex/bicycle-illusion";
 
   function findTrack() {
     get("http://api.soundcloud.com/resolve.json?url=" + trackPermalinkUrl + "&" + clientParameter,
       function (response) {
         var trackInfo = JSON.parse(response);
         audio.src = trackInfo.stream_url + "?" + clientParameter;
+
+
+      // artist track information from trackPermaLinkURL
+      document.getElementById("artistUrl").href = trackInfo.user.permalink_url;
+      document.getElementById("artistAvatar").src = trackInfo.user.avatar_url;
+      document.getElementById("artistName").innerHTML = trackInfo.user.username;
+      document.getElementById("trackUrl").href = trackInfo.permalink_url;
+      if(trackInfo.artwork_url) {
+        document.getElementById("trackArt").src = trackInfo.artwork_url;
+      } else {
+        document.getElementById("trackArt").src = "";
+      }
+      document.getElementById("trackName").innerHTML = trackInfo.title;
+      streamUrl = trackInfo.stream_url + "?" + clientParameter;
+
       }
     );
   };
 
-  findTrack();
+  findTrack(); // this still needs to be here when grabbing the first track that I'm manually populating with the URL
+
+  // Field to enter unique SoundCloud URL 
+  document.getElementById("findButton").addEventListener("click", function(){
+    trackPermalinkUrl = document.getElementById("trackUrlSearch").value;
+    findTrack();
+  });
 
 })();

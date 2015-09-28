@@ -8,46 +8,105 @@ body {
 button {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	border-bottom-width: 2px;
-	border-radius: 5px; font-size: inherit;
-	padding: .5em 1em;
+	border-radius: 3px; font-size: inherit;
+	padding: .5em 2em;
+	margin: 0 .2em;
 	cursor: pointer;
-	background-color: rgb(244, 234, 9)
+	background-color: rgb(25, 236, 242);
 
 }
 
+
+/* Soundcloud logo placement */
 .float {
   position: absolute;
   right: 10px;
   bottom: 0;
 }
 
+
+/* Top container holds the song and corresponding information */
 .top-container {
-	color: #fff;
-	font-family: sans-serif;
-	width: 100%;
+	font-family: 'Droid Sans', sans-serif;	width: 100%;
 	padding-top: 40px;
-	padding-bottom: 40px;
+	padding-bottom: 20px;
 	margin: 0 auto;
 	text-align: center;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 	border-bottom: 2px solid rgba(0, 0, 0, 1);
-	background-color: rgba(0, 0, 0, 0.16);
+	background-color: rgba(25, 236, 242, 0.5);
+	width: 800px;
+	height: 400px;
 }
 
 .top-container h1 {
-	font-size: 28px;
+	color: #fff;
+	font-size: 80px;
+	font-weight: bold;
+	margin-bottom: 0px;
+
 }
 
 .top-container h2 {
-	font-size: 14px;
+	color: rgb(49, 54, 53);
+	font-size: 40px;
 	font-weight: 100;
 	opacity: 0.6;
+	font-weight: bold;
+	margin: 0 0 40px 0;
+
 }
 
-#canvas {
+.top-container h3 {
+	font-size: 14;
+	font-weight: 100;
+	font-weight: normal;
+	/*opacity: 0.6;*/
+}
+
+.top-container a {
+	color: #FFFFFF;
+}
+
+.top-container audio {
+	margin-top: 10px;
+}
+
+.searchfield {
+	margin-bottom: 40px;
+}
+
+.searchfield input {
+	width: 200px;
+	height: 34px;
+}
+
+/* Bottom container holds the filter and track rate variables that the user can manipulate */
+.bottom-container h3 {
+	font-size: 14px;
+	font-family: 'Droid Sans', sans-serif;	width: 100%;
+	font-weight: normal;
+}
+/*#canvas {
 	border: 2px solid black;
 	background-color: rgba(128, 128, 128, 0.16);
+}*/
+
+.albumCover img {
+	-webkit-filter:blur(5px);
+	 width: 120%;
+	 height: auto;
+	 /*background: url(https://images.unsplash.com/photo-1429091967365-492aaa5accfe?q=80&fm=jpg&s=b7430cfe5508430aea39fcf3b0645878) no-repeat center center;*/
+	 position: absolute;
+	 top:-10%;
+	 right:0;
+	 left:-10%;
+	 bottom:0;
+	 //content: '';
+	 background-size: cover;
+	 z-index: -1;
 }
+
 
 input:disabled {
   opacity: 0.1;
