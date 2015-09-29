@@ -54,10 +54,12 @@ var audio;
   // };
 
 // Making the soundcloud audio work with the web audio api filters.
+// What is crossOrigin? In HTML5, some HTML elements which provide support for CORS, such as <img> or <video>, have a crossorigin attribute (crossOrigin property), which lets you configure the CORS requests for the element's fetched data. These attributes are enumerated, and have the following possible values: 'anonymous' or use-credentials https://developer.mozilla.org/en-US/docs/Web/HTML/CORS_settings_attributes
+
   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   window.addEventListener("load", function(e) {
     audio = document.getElementById("theSong");
-    audio.crossOrigin = "anonymous";
+    audio.crossOrigin = "anonymous"; // no credentials flag set
 
 // This adds a sight lowpass filter to the song right away - before user toggles buttons
     var source = audioContext.createMediaElementSource(audio); // source variable
@@ -84,7 +86,7 @@ var audio;
 
 
 // Habber's new filter buttons that toggle filters on/off
-// FILTERS USED - Highpass, lowshelf, lowpass
+// FILTERS USED - Highpass, Lowshelf, Lowpass
 // variables w/in filters. See docs for what applies to which filter type https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode
 // biquadFilter.gain.value... 1-25
 // biquadFilter.frequency... 0 to 3000
@@ -162,7 +164,7 @@ var audio;
     }
 
 
-    // FILTER THREE BUTTERY DRONE
+    // FILTER THREE SMOOTH DRONE
     // Lowpass uses Frequency and Q value
     // biquarFilter.frequency.value = xx // up to 3000
     // biquadFilter.Q.value = xx; // 1 - 100
@@ -201,9 +203,9 @@ var audio;
 // end filter toggles
 
 
-  ////////////////////////////
-  // Soundcloud stuff below //
-  ////////////////////////////
+  /////////////////////////
+  // Soundcloud stuff    //
+  ////////////////////////
 
   function get(url, callback) {
     var request = new XMLHttpRequest();
@@ -225,7 +227,7 @@ var audio;
       // song from The Ex
       "https://soundcloud.com/the-ex/bicycle-illusion";
 
-      // Additional SC URLs to try w/ permission from myself since they are my own
+      // Additional SC URLs to try w/ permission from myself since they are my own songs
           // "https://soundcloud.com/hollyhabstritt/05-magicians-hat";
           // "https://soundcloud.com/hollyhabstritt/08-thought-leader";
 
@@ -248,6 +250,7 @@ var audio;
         document.getElementById("trackArt").src = "";
       }
       document.getElementById("trackName").innerHTML = trackInfo.title;
+      // innerHTML allows me ot alter the text of an HTML element. Also used for updating ArtistName
       streamUrl = trackInfo.stream_url + "?" + clientParameter;
 
       }
