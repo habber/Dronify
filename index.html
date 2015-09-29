@@ -12,17 +12,16 @@
     <div class="top-container">
       <!-- <div class="tc" id="tc"> -->
         <h1>DRONIFY</h1>
-        <h2>Make a song as droney as you like.</h2>
+        <h2>Add some drone to your tone.</h2>
 
-        <!-- by track URL -->
+        <!-- Choose SC track URL -->
           <div class="searchfield">
             <input id="trackUrlSearch" type="url" placeholder="Enter your own SoundCloud URL" />
             <button id="findButton" class="btn">Choose</button>
           </div>
+        <!-- end SC track URL input -->
 
-        <!-- end artist info -->
-
-        <!-- get artist info -->
+        <!-- display artist info -->
         <div>
           <label>Artist:
             <a id="artistUrl">
@@ -41,30 +40,30 @@
             </a>
           </label>
         </div>
+        <!-- end artist info -->
 
         <audio id="theSong" controls />
       <!-- </div> -->
     </div>
 
     <div id="controls">
-    <div class="bottom-container">
-       <div class="slider">
-          <p><h3>
-          Maximum Drone! (Slowest) <input id="rateSlider" title="Rate" type="range" min=".50" max="1" value="1" step=".05" /> Normal
-          </h3></p>
-      </div>
-      <div class="toggles">
-        <button id="filterone" type="submit" value"" class="inactive">DREAMY DRONE</button>
+      <div class="bottom-container">
+         <div class="slider">
+            <p><h3>
+            Maximum Drone! (Slowest) <input id="rateSlider" title="Rate" type="range" min=".50" max="1" value="1" step=".05" /> Normal
+            </h3></p>
+        </div>
+        <div class="toggles">
+          <button id="filterone" type="submit" value"" class="inactive">DREAMY DRONE</button>
 
-        <button id="filtertwo" type="submit" value"" class="inactive">HEAVY DRONE</button>
+          <button id="filtertwo" type="submit" value"" class="inactive">HEAVY DRONE</button>
 
-        <button id="filterthree" type="submit" value"" class="inactive">SMOOTH DRONE</button>
+          <button id="filterthree" type="submit" value"" class="inactive">SMOOTH DRONE</button>
+        </div>
+        <p>
+          <img src="https://developers.soundcloud.com/assets/powered_by_white-371bd6967352fcc89673d4c81f7e5661.png" class="sclogo"></img>
+        </p>
       </div>
-        <!-- <canvas id="canvas" width="0" height ="0"></canvas> -->
-      <p>
-        <img src="https://developers.soundcloud.com/assets/powered_by_white-371bd6967352fcc89673d4c81f7e5661.png" class="sclogo"></img>
-      </p>
-    </div>
     </div>
 
 

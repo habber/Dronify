@@ -23,7 +23,7 @@ var audio;
   // var gainSlider = document.getElementById("gainSlider");
   //
 
-  // Types of Web Audio API filters - for reference. I was using this in a dropdown menu while deciding what I wanted the buttons to apply
+  // Types of Web Audio API filters - for reference, so that I know what characteristics each filter type contains. I was using this in a dropdown menu while deciding what I wanted the buttons to apply
   // https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode/type
   // q and gain value of the corresponding slider
   // var filters = { "lowpass": {
