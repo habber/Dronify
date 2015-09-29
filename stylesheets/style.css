@@ -34,7 +34,7 @@ button:hover {
 .sclogo {
   position: relative;
   right: 10px;
-  bottom: 0;
+  bottom: 10px;
 	top: 40px;
 }
 
