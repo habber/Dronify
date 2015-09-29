@@ -3,6 +3,8 @@ body {
 	text-align: center;
 	margin: 0 auto;
 	position: relative;
+	font-family: 'Droid Sans', sans-serif;	width: 100%;
+
 }
 
 button {
@@ -13,31 +15,49 @@ button {
 	margin: 0 .2em;
 	cursor: pointer;
 	background-color: rgb(25, 236, 242);
+	color: rgb(65, 65, 65);
+	outline: none;
+	/*border: none;*/
+}
+
+.btn {
+	margin-top: 2px;
+}
+
+button:hover {
+	background-color: rgba(25, 236, 242, 0.8);
 
 }
 
 
 /* Soundcloud logo placement */
-.float {
-  position: absolute;
+.sclogo {
+  position: relative;
   right: 10px;
   bottom: 0;
+	top: 40px;
 }
 
 
 /* Top container holds the song and corresponding information */
 .top-container {
-	font-family: 'Droid Sans', sans-serif;	width: 100%;
 	padding-top: 40px;
 	padding-bottom: 20px;
 	margin: 0 auto;
 	text-align: center;
 	margin-bottom: 20px;
-	border-bottom: 2px solid rgba(0, 0, 0, 1);
+	/*border-bottom: 2px solid rgba(0, 0, 0, 1);*/
 	background-color: rgba(25, 236, 242, 0.5);
-	width: 800px;
-	height: 400px;
+	max-width: 800px;
+	min-height: 400px;
 }
+
+/*.tc {
+	background-size: cover;
+	-webkit-filter:blur(5px);
+	position: absolute;
+	z-index: -1;
+}*/
 
 .top-container h1 {
 	color: #fff;
@@ -61,6 +81,7 @@ button {
 	font-size: 14;
 	font-weight: 100;
 	font-weight: normal;
+	color: rgb(65, 65, 65);
 	/*opacity: 0.6;*/
 }
 
@@ -82,22 +103,40 @@ button {
 }
 
 /* Bottom container holds the filter and track rate variables that the user can manipulate */
+.bottom-container {
+	max-width: 800px;
+	min-height: 200px;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	margin: 0 auto;
+	text-align: center;
+	margin-bottom: 20px;
+	/*border-bottom: 2px solid rgba(0, 0, 0, 1);*/
+	background-color: rgba(25, 236, 242, 0.2);
+}
+
 .bottom-container h3 {
 	font-size: 14px;
-	font-family: 'Droid Sans', sans-serif;	width: 100%;
 	font-weight: normal;
+	color: white;
 }
-/*#canvas {
-	border: 2px solid black;
-	background-color: rgba(128, 128, 128, 0.16);
-}*/
+
+.bottom-container button {
+	margin-top: 20px;
+}
+
+.bottom-container slider {
+	margin-top: 20px;
+
+}
 
 .albumCover img {
 	-webkit-filter:blur(5px);
 	 width: 120%;
 	 height: auto;
-	 /*background: url(https://images.unsplash.com/photo-1429091967365-492aaa5accfe?q=80&fm=jpg&s=b7430cfe5508430aea39fcf3b0645878) no-repeat center center;*/
+	 /*background: url(https://xxxx) no-repeat center center;*/
 	 position: absolute;
+	 background: no-repeat center center;
 	 top:-10%;
 	 right:0;
 	 left:-10%;
@@ -108,6 +147,11 @@ button {
 }
 
 
-input:disabled {
-  opacity: 0.1;
-}
+/* If the width is below 600: */
+ @media (max-width: 600px) {
+	 /*body { font-size: 15px; }*/
+	 .toggles {
+		 width: 100%;
+		 display: inline;
+		 /*background-color: #f2bee3;*/
+	 }

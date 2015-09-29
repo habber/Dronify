@@ -1,18 +1,14 @@
 /*
-  Thanks to @DonKarlssonSan
-  http://codepen.io/DonKarlssonSan/blog/fun-with-web-audio-api
+  This was an exercise for me to learn more about the web audio api and how to use external apis like SoundCloud.
+
+  Thanks to @DonKarlssonSan for this awesome blog pot http://codepen.io/DonKarlssonSan/blog/fun-with-web-audio-api
 
   Thanks to @chrisdavidmills who helped me out and wrote MDN's Web Audio API docs
+  https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode
 
-  Browser support for Web Audio API:
-  http://caniuse.com/#feat=audio-api
+  More details here (resources, helpful links, etc) https://docs.google.com/presentation/d/12G4dOEdJloS32DelfCPSQAPs_b7SwlYWxqr9PpeF18U/edit?usp=sharing
+
 */
-
-
-// var playbackControl = document.querySelector('.playback-rate-control');
-// var playbackValue = document.querySelector('.playback-rate-value');
-// playbackControl.setAttribute('disabled', 'disabled');
-
 
 var audio;
 
@@ -22,65 +18,49 @@ var audio;
   var audioContext;
   var biquadFilter;
 
-  var frequencySlider = document.getElementById("frequencySlider");
-  var qSlider = document.getElementById("qSlider");
-  var gainSlider = document.getElementById("gainSlider");
+  // var frequencySlider = document.getElementById("frequencySlider");
+  // var qSlider = document.getElementById("qSlider");
+  // var gainSlider = document.getElementById("gainSlider");
+  //
 
-
-  // All Web Audio API filters
+  // Types of Web Audio API filters - for reference. I was using this in a dropdown menu while deciding what I wanted the buttons to apply
   // https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode/type
-  // q and gain controls of the corresponding slider
-  var filters = { "lowpass": {
-      q: true,
-      gain: false
-    }, "highpass": {
-      q: true,
-      gain: false
-    }, "bandpass": {
-      q: true,
-      gain: false
-    }, "lowshelf": {
-      q: false,
-      gain: true
-    }, "highshelf": {
-      q: false,
-      gain: true
-    }, "peaking": {
-      q: true,
-      gain: true
-    }, "notch": {
-      q: true,
-      gain: false
-    }, "allpass": {
-      q: true,
-      gain: false
-    }
-  };
+  // q and gain value of the corresponding slider
+  // var filters = { "lowpass": {
+  //     q: true,
+  //     gain: false
+  //   }, "highpass": {
+  //     q: true,
+  //     gain: false
+  //   }, "bandpass": {
+  //     q: true,
+  //     gain: false
+  //   }, "lowshelf": {
+  //     q: false,
+  //     gain: true
+  //   }, "highshelf": {
+  //     q: false,
+  //     gain: true
+  //   }, "peaking": {
+  //     q: true,
+  //     gain: true
+  //   }, "notch": {
+  //     q: true,
+  //     gain: false
+  //   }, "allpass": {
+  //     q: true,
+  //     gain: false
+  //   }
+  // };
 
-// TURNED OFF VISUALIZATIONS IN HTML
-  var canvas = document.getElementById("canvas");
-  var canvasContext = canvas.getContext("2d");
-
-  var frequencyBars = 100;
-  // Array containing all the frequencies we want to get
-  // response for when calling getFrequencyResponse()
-  var myFrequencyArray = new Float32Array(frequencyBars);
-  for(var i = 0; i < frequencyBars; ++i) {
-    myFrequencyArray[i] = 2000/frequencyBars*(i+1);
-  }
-
-  // We receive the result in these two when calling
-  // getFrequencyResponse()
-  var magResponseOutput = new Float32Array(frequencyBars); // magnitude
-  var phaseResponseOutput = new Float32Array(frequencyBars);
-
+// Making the soundcloud audio work with the web audio api filters.
   var audioContext = new (window.AudioContext || window.webkitAudioContext)();
   window.addEventListener("load", function(e) {
     audio = document.getElementById("theSong");
     audio.crossOrigin = "anonymous";
 
+// This adds a sight lowpass filter to the song right away - before user toggles buttons
     var source = audioContext.createMediaElementSource(audio); // source variable
-    // var source = audioContext.createMediaElementSource(audio); // source variable
     biquadFilter = audioContext.createBiquadFilter();
     biquadFilter.type = "lowpass";
     biquadFilter.frequency.value = 1000;
@@ -89,32 +69,33 @@ var audio;
 
     source.connect(biquadFilter);
     biquadFilter.connect(audioContext.destination);
-
     // updateFrequencyResponse();
 
 
-// Habber's new rate slider - that works!
+// Habber's rate slider
         var rateSlider = document.getElementById("rateSlider");
-        // playbackRate.connect(audioContext.destination);
-        // source2.connect(audioContext.destination);
-
         rateSlider.addEventListener("change", function () {
         //audio.playbackRate = .5;
         audio.playbackRate = rateSlider.value;
         // source.playbackRate.value = this.value;
   }, false);
 
+// end rate slider
 
-// Habber grabbing artist name
-// document.getElementById("artistName").innerHTML = trackInfo.user.username;
 
-// Habber's new filter button that sort of works - once filter works, add if/than state to toggle off/on
-// tried a few things like this .classList.toggle("filterone");
+// Habber's new filter buttons that toggle filters on/off
+// FILTERS USED - Highpass, lowshelf, lowpass
+// variables w/in filters. See docs for what applies to which filter type https://developer.mozilla.org/en-US/docs/Web/API/BiquadFilterNode
+// biquadFilter.gain.value... 1-25
+// biquadFilter.frequency... 0 to 3000
+// biquadFilter.Q.value... 1 - 100
+
+
 
 // FILTER ONE DREAMY DRONE
 // Highpass uses Frequency and Q
 // biquadFilter.gain.value 1-25
-// biquarFilter.frequency.value = xx // up to 3000
+// biquadFilter.frequency.value = xx // up to 3000
 // biquadFilter.Q.value = xx; // 1 - 100
 
     var filterone = document.getElementById("filterone");
@@ -122,7 +103,6 @@ var audio;
 
     function filterToggleOne(event) {
       // console.log(this.id);
-
       biquadFilter.type = "highpass";
 
       if(this.className == "active") {
@@ -132,13 +112,17 @@ var audio;
       // biquadFilter.gain.value = 0;
       this.className = "inactive";
       filterone.style.backgroundColor = 'rgb(25, 236, 242)';
+      filterone.style.color = 'rgb(60, 60, 60)';
+
     } else {
       // Activate filter
       biquadFilter.frequency.value = 1000;
       biquadFilter.Q.value = 20;
       // biquadFilter.gain.value = 10;
       this.className = "active";
-      filterone.style.backgroundColor = 'rgb(255, 255, 255)';
+      filterone.style.backgroundColor = 'rgba(25, 175, 180, 0.8)';
+      filterone.style.color = 'rgb(65, 65, 65)';
+
       // alert(this.className);
     }
       event.preventDefault();
@@ -162,6 +146,7 @@ var audio;
       biquadFilter.gain.value = 0;
       this.className = "inactive";
       filtertwo.style.backgroundColor = 'rgb(25, 236, 242)';
+      filtertwo.style.color = 'rgb(60, 60, 60)';
 
     } else {
       // activate filter
@@ -169,7 +154,9 @@ var audio;
       biquadFilter.gain.value = 10;
       this.className = "active";
       // document.getElementById(id).style.background = 'rgb(25, 236, 242)';
-      filtertwo.style.backgroundColor = 'rgb(255, 255, 255)';
+      filtertwo.style.backgroundColor = 'rgba(25, 175, 180, 0.8)';
+      filtertwo.style.color = 'rgb(65, 65, 65)';
+
     }
       event.preventDefault();
     }
@@ -193,6 +180,7 @@ var audio;
           biquadFilter.Q.value = 0;
           this.className = "inactive";
           filterthree.style.backgroundColor = 'rgb(25, 236, 242)';
+          filterthree.style.color = 'rgb(60, 60, 60)';
 
           // alert(this.className);
         } else {
@@ -200,97 +188,17 @@ var audio;
           biquadFilter.frequency.value = 1000;
           biquadFilter.Q.value = 20;
           this.className = "active";
-          filterthree.style.backgroundColor = 'rgb(255, 255, 255)';
+          filterthree.style.backgroundColor = 'rgba(25, 175, 180, 0.8)';
+          filterthree.style.color = 'rgb(65, 65, 65)';
+
           // alert(this.className);
 
         }
         event.preventDefault();
-
-
       }
   });
 
-  // end Habber's additions
-
-
-  //////////////////////////////////////
-  // Visualizations   - will omit      //
-  //////////////////////////////////////
-  //
-  // function drawFrequencyResponse(mag, phase) {
-  //   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
-  //   var barWidth = 400 / frequencyBars;
-  //
-  //   // Magnitude
-  //   canvasContext.strokeStyle = "white";
-  //   canvasContext.beginPath();
-  //   for(var frequencyStep = 0; frequencyStep < frequencyBars; ++frequencyStep) {
-  //     canvasContext.lineTo(
-  //       frequencyStep * barWidth,
-  //       canvas.height - mag[frequencyStep]*90);
-  //   }
-  //   canvasContext.stroke();
-  //
-  //   // Phase
-  //   canvasContext.strokeStyle = "red";
-  //   canvasContext.beginPath();
-  //   for(var frequencyStep = 0; frequencyStep < frequencyBars; ++frequencyStep) {
-  //     canvasContext.lineTo(
-  //       frequencyStep * barWidth,
-  //       canvas.height - (phase[frequencyStep]*90 + 300)/Math.PI);
-  //   }
-  //   canvasContext.stroke();
-  // }
-  //
-  // function updateFrequencyResponse() {
-  //   biquadFilter.getFrequencyResponse(
-  //     myFrequencyArray,
-  //     magResponseOutput,
-  //     phaseResponseOutput);
-  //   drawFrequencyResponse(magResponseOutput, phaseResponseOutput);
-  // }
-  //
-  // frequencySlider.addEventListener("change", function () {
-  //   biquadFilter.frequency.value = this.value;
-  // });
-  //
-  // frequencySlider.addEventListener("mousemove", function () {
-  //   biquadFilter.frequency.value = this.value;
-  //   updateFrequencyResponse();
-  // });
-  //
-  // qSlider.addEventListener("mousemove", function () {
-  //   biquadFilter.Q.value = this.value;
-  //   updateFrequencyResponse();
-  // });
-  //
-  // gainSlider.addEventListener("mousemove", function () {
-  //   biquadFilter.gain.value = this.value;
-  //   updateFrequencyResponse();
-  // });
-  //
-  // var filtersDropdown = document.getElementById("filtersDropdown");
-  //
-  // for(var item in filters) {
-  //   var option = document.createElement("option");
-  //   option.innerHTML = item;
-  //   // This will cause a re-flow of the page but we don't care
-  //   filtersDropdown.appendChild(option);
-  // };
-  //
-  // function filterClicked (event) {
-  //   event = event || window.event;
-  //   var target = event.target || event.srcElement;
-  //   var filterName = target.value;
-  //   biquadFilter.type = filterName;
-  //   updateFrequencyResponse();
-  //   qSlider.disabled = !filters[filterName].q;
-  //   gainSlider.disabled = !filters[filterName].gain;
-  // };
-  // filtersDropdown.addEventListener("change", filterClicked, false);
-
-
-
+// end filter toggles
 
 
   ////////////////////////////
@@ -312,12 +220,14 @@ var audio;
 // habber's client key
   var clientParameter = "client_id=9bf8bff0bdb5b353618c208a84636d01"
 
-// habber's song w/ permission from myself because I wrote it :)
+
   var trackPermalinkUrl =
-      // "https://soundcloud.com/hollyhabstritt/05-magicians-hat";
-      // "https://soundcloud.com/hollyhabstritt/08-thought-leader";
-      // song from the ex amsterdam
+      // song from The Ex
       "https://soundcloud.com/the-ex/bicycle-illusion";
+
+      // Additional SC URLs to try w/ permission from myself since they are my own
+          // "https://soundcloud.com/hollyhabstritt/05-magicians-hat";
+          // "https://soundcloud.com/hollyhabstritt/08-thought-leader";
 
   function findTrack() {
     get("http://api.soundcloud.com/resolve.json?url=" + trackPermalinkUrl + "&" + clientParameter,
@@ -331,6 +241,7 @@ var audio;
       document.getElementById("artistAvatar").src = trackInfo.user.avatar_url;
       document.getElementById("artistName").innerHTML = trackInfo.user.username;
       document.getElementById("trackUrl").href = trackInfo.permalink_url;
+      // document.getElementById("tc").style.backgroundImage = "url(" + trackInfo.user.avatar_url + ")";
       if(trackInfo.artwork_url) {
         document.getElementById("trackArt").src = trackInfo.artwork_url;
       } else {
@@ -345,7 +256,7 @@ var audio;
 
   findTrack(); // this still needs to be here when grabbing the first track that I'm manually populating with the URL
 
-  // Field to enter unique SoundCloud URL 
+  // Field to enter unique SoundCloud URL
   document.getElementById("findButton").addEventListener("click", function(){
     trackPermalinkUrl = document.getElementById("trackUrlSearch").value;
     findTrack();
