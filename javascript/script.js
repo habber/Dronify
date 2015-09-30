@@ -224,11 +224,11 @@ var audio;
 
   var trackPermalinkUrl =
       // song from The Ex
-      "https://soundcloud.com/the-ex/bicycle-illusion";
+      // "https://soundcloud.com/the-ex/bicycle-illusion";
 
       // Additional SC URLs to try w/ permission from myself since they are my own songs
           // "https://soundcloud.com/hollyhabstritt/05-magicians-hat";
-          // "https://soundcloud.com/hollyhabstritt/08-thought-leader";
+          "https://soundcloud.com/hollyhabstritt/08-thought-leader";
 
   function findTrack() {
     get("http://api.soundcloud.com/resolve.json?url=" + trackPermalinkUrl + "&" + clientParameter,
