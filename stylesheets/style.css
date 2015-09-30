@@ -32,10 +32,9 @@ button:hover {
 
 /* Soundcloud logo placement */
 .sclogo {
-  position: relative;
-  right: 10px;
-  bottom: 10px;
-	top: 40px;
+  /*position: relative;*/
+	margin-bottom: 20px;
+	margin-top: 40px;
 }
 
 
@@ -135,6 +134,7 @@ button:hover {
 	-webkit-filter:blur(5px);
 	 width: 120%;
 	 height: auto;
+	 min-width: 1000px;
 	 /*background: url(https://xxxx) no-repeat center center;*/
 	 position: absolute;
 	 background: no-repeat center center;
@@ -145,6 +145,7 @@ button:hover {
 	 //content: '';
 	 background-size: cover;
 	 z-index: -1;
+	 background-attachment: fixed;
 }
 
 
@@ -154,5 +155,6 @@ button:hover {
 	 .toggles {
 		 width: 100%;
 		 display: inline;
+		 padding-bottom: 60px;
 		 /*background-color: #f2bee3;*/
 	 }
