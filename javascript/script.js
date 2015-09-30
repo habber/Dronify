@@ -117,7 +117,7 @@ var audio;
 
     } else {
       // Activate filter
-      biquadFilter.frequency.value = 1000;
+      biquadFilter.frequency.value = 800;
       biquadFilter.Q.value = 20;
       // biquadFilter.gain.value = 10;
       this.className = "active";
